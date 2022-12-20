@@ -1,70 +1,23 @@
-# Getting Started with Create React App
+## How to run the code
+(assumes you have node installed)
+1. Clone the repo using: > git clone https://github.com/SamMorton123/hive-frontend-challenge
+2. run: > npm install
+3. finally, run: > npm start
+    This should start up the site I threw together to display the dropdown component. It should open in
+    a new browser window at localhost:3000
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## What code should you look at?
+I started the project with React starter, so there's some code in the repo that isn't relevant to the assignment. The code that I wrote for this can be found in:
+    - App.js
+    - App.css
+    - Dropdown.js
+    - DropdownItem.js
+    - dropdown.css
 
-## Available Scripts
+## Some implementation notes
+I tried to write the Dropdown API with reusability in mind. The API itself accepts 4 props. `givenData` expects an array of items to display under the dropdown. `onDataChange` is a flexible prop that accepts a method and runs it every time the user changes the items that are selected under the dropdown. The intention of this is so that a developer could access the user's selection from the dropdown upstream. `multiselect` prop just toggles on or off whether the user can select multiple options. Finally, `size` expect "small", "medium", or "large". I understand this isn't the most flexible thing ever, but I ran out of time to do something better.
 
-In the project directory, you can run:
+The dropdown implements all the requested features in the prompt. In the sample website that is run when you run "npm start", I include 6 dropdowns showcasing the different size options, with 2 different datasets for each size.
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Some caveats
+I wanted to implement better styling and also a test suite, but unfortunately I ran out of time to implement those. I take testing very seriously and wanted to demonstrate that. Lastly, when you scroll down in my dropdown and select an option, you are automatically scrolled back to the top, which isn't the greatest UX. I didn't have time to fix this, but I thought I'd note it here.
