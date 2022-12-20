@@ -2,14 +2,15 @@ import React from 'react';
 
 import './dropdown.css';
 
-export const DropdownItem = ({ content, updateSelectionStatus, isItalic, isMultiSelect, isChecked }) => {
+export const DropdownItem = ({ content, onClick, isSpecialOption, isMultiSelect, isChecked }) => {
 
-    const italicId = isItalic ? 'italic' : null;
-    const classname = isMultiSelect ? 'dropdown-option-multi' : 'dropdown-option';
+    // determine the class of given option
+    let classname;
+    if (isSpecialOption) classname = 'dropdown-option-special';
+    else classname = isMultiSelect ? 'dropdown-option-multi' : 'dropdown-option';
 
-    // console.log('is checked for ', content, 'is ', isChecked);
     const genItemContent = () => {
-        if (!isMultiSelect) return <span>{content}</span>;
+        if (isSpecialOption || !isMultiSelect) return <span>{content}</span>;
 
         const id = isChecked ? "checked" : null;
         return (
@@ -22,7 +23,7 @@ export const DropdownItem = ({ content, updateSelectionStatus, isItalic, isMulti
     }
 
    return (
-       <div className={classname} id={italicId} onClick={(e) => updateSelectionStatus(e, content)}>
+       <div className={classname} onClick={(e) => onClick(e, content)}>
            {genItemContent()}
        </div>
    );

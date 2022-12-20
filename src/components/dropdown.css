@@ -42,6 +42,17 @@
     align-items: center;
 }
 
+.dropdown-option-special {
+    height: 25px;
+    padding: 5px 0px 0px 65px;
+    font-style: italic;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 .check-container {
     display: block;
     position: relative;

@@ -15,7 +15,9 @@ const Icon = () => {
         <path d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path>
       </svg>
     );
-  };
+};
+
+const specialOptions = ['None', 'Select all', 'Deselect all'];
 
 export const Dropdown = ({ data, multiselect, size, selectName }) => {
 
@@ -46,6 +48,7 @@ export const Dropdown = ({ data, multiselect, size, selectName }) => {
     }, [ref]);
 
     const updateSelectionStatus = (e, clickedItem) => {
+        console.log('called');
         e.preventDefault();
 
         if (multiselect) {
@@ -56,7 +59,7 @@ export const Dropdown = ({ data, multiselect, size, selectName }) => {
             setSelected([clickedItem]);
         }
 
-        //setOptionsVisible(!optionsVisible);
+        if (!multiselect) setOptionsVisible(!optionsVisible);
     };
 
     const selectAll = () => {
@@ -70,15 +73,27 @@ export const Dropdown = ({ data, multiselect, size, selectName }) => {
     const selectorPrompt = (selected.length === 0 || selected[0] === 'None') ? 'Select an option' : selected[0];
 
     const Options = () => {
+
+        const dataWithAdditionalOptions = (
+            multiselect 
+            ? ['Select all', 'Deselect all', ...data]
+            : ['None', ...data]
+        );
         return (
             <div className="dropdown-options">
-                {['None', ...data].map((item) => {
-                    const isItalic = item === 'None';
+                {dataWithAdditionalOptions.map((item, index) => {
+                    const isSpecialOption = index < 2 && specialOptions.includes(item);
+
+                    let onClick;
+                    if (isSpecialOption && item == 'Select all') onClick = selectAll;
+                    else if (isSpecialOption && item === 'Deselect all') onClick = deselectAll;
+                    else onClick = updateSelectionStatus;
+
                     return (
                         <DropdownItem
                             content={item}
-                            updateSelectionStatus={updateSelectionStatus}
-                            isItalic={isItalic}
+                            onClick={onClick}
+                            isSpecialOption={isSpecialOption}
                             isMultiSelect={multiselect}
                             isChecked={selected.includes(item)}
                             key={item}
