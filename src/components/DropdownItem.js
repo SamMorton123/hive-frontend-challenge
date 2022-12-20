@@ -6,8 +6,9 @@ export const DropdownItem = ({ content, onClick, isSpecialOption, isMultiSelect,
 
     // determine the class of given option
     let classname;
-    if (isSpecialOption) classname = 'dropdown-option-special';
-    else classname = isMultiSelect ? 'dropdown-option-multi' : 'dropdown-option';
+    if (isSpecialOption) {
+        classname = content === 'None' ? 'dropdown-option-special' : 'dropdown-option-special-multi';
+    } else classname = isMultiSelect ? 'dropdown-option-multi' : 'dropdown-option';
 
     const genItemContent = () => {
         if (isSpecialOption || !isMultiSelect) return <span>{content}</span>;

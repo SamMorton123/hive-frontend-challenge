@@ -21,27 +21,35 @@ const DropdownIcon = () => (
     </svg>
 );
 
+/*
+The Dropdown component as described in the takehome prompt.
+*/
 export const Dropdown = ({ data, multiselect, size, selectName }) => {
 
+    // using ref to help the dropdown detect when the user clicks outside of it
     const ref = useRef(null);
 
     // determine class of dropdown based on given size prop
-    const dropdownSelectClass = size === 'large' ? 'dropdown-select-large' : 'dropdown-select-default';
+    const dropdownClass = size === 'large' ? 'dropdown-large-container' : 'dropdown-default-container';
 
     /*
-    selected state is an array which tracks which item or items are selected. If
+    Selected state is an array which tracks which item or items are selected. If
     multiselect is on, then the array can have multiple elements. If it's off, then 
     the component will enforce that it has at most one element.
     */
     const [selected, setSelected] = useState([]);
+
+    // controls whether the dropdown options are visible
     const [optionsVisible, setOptionsVisible] = useState(false);
 
     useEffect(() => {
+
+        // check whether or not 
         const detectOutsideClick = (event) => {
             if (ref.current && !ref.current.contains(event.target)) {
                 setOptionsVisible(false);
             }
-        }
+        };
 
         document.addEventListener('mousedown', detectOutsideClick);
         return () => {
@@ -117,8 +125,8 @@ export const Dropdown = ({ data, multiselect, size, selectName }) => {
     };
 
     return (
-        <div className="select-container" ref={ref}>
-            <div className="select-default" onClick={() => setOptionsVisible(!optionsVisible)}>
+        <div className={dropdownClass} ref={ref}>
+            <div className="dropdown" onClick={() => setOptionsVisible(!optionsVisible)}>
                 <span>{genSelectorPrompt()}</span>
                 <DropdownIcon />
             </div>
