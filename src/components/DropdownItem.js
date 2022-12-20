@@ -2,20 +2,28 @@ import React from 'react';
 
 import './dropdown.css';
 
-export const DropdownItem = ({ content, updateSelectionStatus, isItalic, isMultiSelect_, isChecked_ }) => {
+export const DropdownItem = ({ content, updateSelectionStatus, isItalic, isMultiSelect, isChecked }) => {
 
-    /*
-    A brief arg check first. I'll check: whether the isMultiSelect and isChecked are booleans,
-    and have them default to false if they aren't booleans
-    */
-   const isMultiSelect = (typeof isMultiSelect_ === 'boolean') ? isMultiSelect_ : false;
-   const isChecked = (typeof isChecked_ === 'boolean') ? isChecked_ : false;
+    const italicId = isItalic ? 'italic' : null;
+    const classname = isMultiSelect ? 'dropdown-option-multi' : 'dropdown-option';
 
-   const italicId = isItalic ? 'italic' : null;
+    // console.log('is checked for ', content, 'is ', isChecked);
+    const genItemContent = () => {
+        if (!isMultiSelect) return <span>{content}</span>;
+
+        const id = isChecked ? "checked" : null;
+        return (
+            <label className="check-container">
+                <input type="checkbox" />
+                <span className="checkmark" id={id} />
+                {content}
+            </label>
+        );
+    }
 
    return (
-       <div className="dropdown-option" id={italicId} onClick={updateSelectionStatus}>
-           {content}
+       <div className={classname} id={italicId} onClick={(e) => updateSelectionStatus(e, content)}>
+           {genItemContent()}
        </div>
    );
 };

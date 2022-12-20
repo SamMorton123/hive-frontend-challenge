@@ -30,18 +30,18 @@ export const Dropdown = ({ data, multiselect, size, selectName }) => {
     const [selected, setSelected] = useState([]);
     const [optionsVisible, setOptionsVisible] = useState(false);
 
-    const updateSelectionStatus = (clickedItem) => {
+    const updateSelectionStatus = (e, clickedItem) => {
+        e.preventDefault();
 
-        if (selected.includes(clickedItem)) {
-            setSelected(prevState => prevState.filter(item => item !== clickedItem));
+        if (multiselect) {
+            if (selected.includes(clickedItem))
+                setSelected(prevState => prevState.filter(item => item !== clickedItem));
+            else setSelected(prevState => [...prevState, clickedItem]);
         } else {
-
-            if (multiselect) {
-                setSelected(prevState => [...prevState, clickedItem]);
-            } else {
-                setSelected([clickedItem]);
-            }
+            setSelected([clickedItem]);
         }
+
+        //setOptionsVisible(!optionsVisible);
     };
 
     const selectAll = () => {
@@ -52,49 +52,37 @@ export const Dropdown = ({ data, multiselect, size, selectName }) => {
         setSelected([]);
     };
 
-    const Options = (
-        <div className="dropdown-options">
-            {['None', ...data].map((item) => {
-                const isItalic = item === 'None';
-                return (
-                    <DropdownItem
-                        content={item}
-                        updateSelectionStatus={updateSelectionStatus}
-                        isItalic={isItalic}
-                        key={item}
-                    />
-                );
-            })}
-        </div>
-    );
+    const selectorPrompt = (selected.length === 0 || selected[0] === 'None') ? 'Select an option' : selected[0];
+
+    const Options = () => {
+
+        // console.log('selected:', selected);
+        return (
+            <div className="dropdown-options">
+                {['None', ...data].map((item) => {
+                    const isItalic = item === 'None';
+                    return (
+                        <DropdownItem
+                            content={item}
+                            updateSelectionStatus={updateSelectionStatus}
+                            isItalic={isItalic}
+                            isMultiSelect={multiselect}
+                            isChecked={selected.includes(item)}
+                            key={item}
+                        />
+                    );
+                })}
+            </div>
+        );
+    };
 
     return (
         <div className="select-container">
             <div className="select-default" onClick={() => setOptionsVisible(!optionsVisible)}>
-                <span>Select an option</span>
+                <span>{selectorPrompt}</span>
                 <Icon />
             </div>
-            {optionsVisible ? Options : null}
+            {optionsVisible ? Options() : null}
         </div>
     );
-
-    // const Multi = (
-    //     <select className="select-options" multiple>
-            // {data.map((item, index) => (
-            //     <DropdownItem content={item} updateSelectionStatus={updateSelectionStatus} key={item} />
-            // ))}
-    //     </select>
-    // );
-
-    // return (
-    //     <div class="select-container">
-    //         <div className="select-label">{selectName}</div>
-    //         <div class="select-default" onClick={() => setOptionsVisible(!optionsVisible)}>
-    //             <select>
-    //                 <option hidden>Select an option</option>
-    //             </select>
-    //         </div>
-    //         {optionsVisible ? Multi : null}
-    //     </div>
-    // );
 };

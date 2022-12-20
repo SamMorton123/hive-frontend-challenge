@@ -9,7 +9,7 @@ const App = () => {
 
   return (
     <div className="app">
-      <Dropdown data={data} selectName="Select Option" multiselect />
+      <Dropdown data={data} selectName="Select Option" multiselect={true} />
     </div>
   );
 }
