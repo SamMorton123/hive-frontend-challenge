@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { DropdownItem } from './DropdownItem';
 
@@ -19,6 +19,8 @@ const Icon = () => {
 
 export const Dropdown = ({ data, multiselect, size, selectName }) => {
 
+    const ref = useRef(null);
+
     // determine class of dropdown based on given size prop
     const dropdownSelectClass = size === 'large' ? 'dropdown-select-large' : 'dropdown-select-default';
 
@@ -29,6 +31,19 @@ export const Dropdown = ({ data, multiselect, size, selectName }) => {
     */
     const [selected, setSelected] = useState([]);
     const [optionsVisible, setOptionsVisible] = useState(false);
+
+    useEffect(() => {
+        const detectOutsideClick = (event) => {
+            if (ref.current && !ref.current.contains(event.target)) {
+                setOptionsVisible(false);
+            }
+        }
+
+        document.addEventListener('mousedown', detectOutsideClick);
+        return () => {
+            document.removeEventListener('mousedown', detectOutsideClick);
+        };
+    }, [ref]);
 
     const updateSelectionStatus = (e, clickedItem) => {
         e.preventDefault();
@@ -55,8 +70,6 @@ export const Dropdown = ({ data, multiselect, size, selectName }) => {
     const selectorPrompt = (selected.length === 0 || selected[0] === 'None') ? 'Select an option' : selected[0];
 
     const Options = () => {
-
-        // console.log('selected:', selected);
         return (
             <div className="dropdown-options">
                 {['None', ...data].map((item) => {
@@ -77,7 +90,7 @@ export const Dropdown = ({ data, multiselect, size, selectName }) => {
     };
 
     return (
-        <div className="select-container">
+        <div className="select-container" ref={ref}>
             <div className="select-default" onClick={() => setOptionsVisible(!optionsVisible)}>
                 <span>{selectorPrompt}</span>
                 <Icon />
