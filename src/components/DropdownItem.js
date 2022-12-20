@@ -1,6 +1,8 @@
 import React from 'react';
 
-export const DropdownItem = ({ content, updateSelectionStatus, isMultiSelect_, isChecked_ }) => {
+import './dropdown.css';
+
+export const DropdownItem = ({ content, updateSelectionStatus, isItalic, isMultiSelect_, isChecked_ }) => {
 
     /*
     A brief arg check first. I'll check: whether the isMultiSelect and isChecked are booleans,
@@ -9,9 +11,11 @@ export const DropdownItem = ({ content, updateSelectionStatus, isMultiSelect_, i
    const isMultiSelect = (typeof isMultiSelect_ === 'boolean') ? isMultiSelect_ : false;
    const isChecked = (typeof isChecked_ === 'boolean') ? isChecked_ : false;
 
+   const italicId = isItalic ? 'italic' : null;
+
    return (
-       <option className="dropdown-item" onClick={updateSelectionStatus}>
+       <div className="dropdown-option" id={italicId} onClick={updateSelectionStatus}>
            {content}
-       </option>
+       </div>
    );
 };

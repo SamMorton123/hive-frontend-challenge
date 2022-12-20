@@ -5,11 +5,11 @@ import './App.css';
 
 const App = () => {
 
-  const data = ['sam', 'nat', 'tan', 'dave'];
+  const data = ['Sam', 'Nat', 'Tan', 'Dave'];
 
   return (
-    <div>
-      <Dropdown data={data} multiselect />
+    <div className="app">
+      <Dropdown data={data} selectName="Select Option" multiselect />
     </div>
   );
 }
