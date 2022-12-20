@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-
 import { DropdownItem } from './DropdownItem';
 
 import './dropdown.css';
@@ -23,14 +22,28 @@ const DropdownIcon = () => (
 
 /*
 The Dropdown component as described in the takehome prompt.
+Props:
+    - givenData: the data to be displayed by the component
+    - onDataChange: callback that is called every time there is a chnage in the set of
+        items selected by the user
+    - multiselect: toggles multiselect on and off
+    - size: single API for sizing the component. user can select "small", "medium", or "large".
+        If not specified, defaults to "medium"
 */
-export const Dropdown = ({ data, multiselect, size }) => {
+export const Dropdown = ({ givenData, onDataChange, multiselect, size }) => {
+
+    // ensure all given data are strings
+    const data = givenData.map((item) => String(item));
 
     // using ref to help the dropdown detect when the user clicks outside of it
     const ref = useRef(null);
 
     // determine class of dropdown based on given size prop
-    const dropdownClass = size === 'large' ? 'dropdown-large-container' : 'dropdown-default-container';
+    let dropdownClass;
+    if (size === 'large') dropdownClass = 'dropdown-large-container';
+    else if (size === 'medium') dropdownClass = 'dropdown-default-container';
+    else if (size === 'small') dropdownClass = 'dropdown-small-container';
+    else dropdownClass = 'dropdown-default-container';
 
     /*
     Selected state is an array which tracks which item or items are selected. If
@@ -110,6 +123,10 @@ export const Dropdown = ({ data, multiselect, size }) => {
     returns the user to the state of having nothing selected. Further, it tags the "None", 
     "Select all", "Deselect all" options as "special options," as they're not typical 
     options for the user.
+    
+    Props:
+        - data: the data passed in the main Dropdown component props
+        - selected: the state indicating which option(s) are selected
     */
     const DropdownOptionsContainer = ({ data, selected }) => {
 
@@ -172,6 +189,11 @@ export const Dropdown = ({ data, multiselect, size }) => {
         };
     
     }, [ref]);
+
+    // call the onDataChange method every time the selected state is updated
+    useEffect(() => {
+        if (onDataChange) onDataChange(selected);
+    }, [selected]);
 
     return (
         <div className={dropdownClass} ref={ref}>
