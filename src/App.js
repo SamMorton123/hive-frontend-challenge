@@ -5,7 +5,7 @@ import './App.css';
 
 const App = () => {
 
-  const data = ['Sam', 'Nat', 'Tan', 'Dave'];
+  const data = ['Sam', 'Nat', 'Tan', 'Dave', 'Person 1', 'Person 2', 'Person 3', 'Personsssjsjsjsj4', 'Andnddnd 5', 'And more'];
 
   return (
     <div className="app">

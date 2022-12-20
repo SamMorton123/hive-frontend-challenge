@@ -1,6 +1,6 @@
 .select-container {
     width: 350px;
-    height: 200px;
+    height: 250px;
 }
 
 .select-default {
@@ -19,12 +19,15 @@
 
 .select-default > * {
     padding: 10px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .dropdown-options {
     width: 100%;
     height: 70%;
-    padding-top: 5px;
 
     border-radius: 4px;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.5);
@@ -34,7 +37,7 @@
 
 .dropdown-option {
     height: 25px;
-    padding: 5px 0px 0px 18px;
+    padding: 3px 0px 3px 18px;
 
     display: flex;
     flex-direction: row;
@@ -44,7 +47,8 @@
 
 .dropdown-option-special {
     height: 25px;
-    padding: 5px 0px 0px 65px;
+    padding: 3px 0px 3px 65px;
+    cursor: pointer;
     font-style: italic;
 
     display: flex;
@@ -53,12 +57,16 @@
     align-items: center;
 }
 
+.dropdown-option-special:hover {
+    background-color: #F5F5F5;
+}
+
 .check-container {
     display: block;
     position: relative;
     padding-left: 65px;
     margin-top: 10px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     cursor: pointer;
     font-size: 22px;
 
@@ -66,6 +74,10 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .check-container > input {
